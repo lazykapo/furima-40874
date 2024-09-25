@@ -34,13 +34,12 @@
 
 ### Association
 
-- belongs_to :users
+- belongs_to :user
 - has_one :order
 
 ## Orders table
 | Column             | Type                | Options                        |
 |--------------------|---------------------|--------------------------------|
-| payment            | integer             | null: false                    |
 | user               | references          | null: false, foreign_key: true |
 | item               | references          | null: false, foreign_key: true |
 
@@ -51,16 +50,16 @@
 - belongs_to :user
 - has_one :delivery
 
-## Delivery table
+## Deliveries table
 
 | Column             | Type                | Options                        |
 |--------------------|---------------------|--------------------------------|
-| post_code          | integer             | null: false                    |
+| post_code          | string              | null: false                    |
 | prefecture_id      | integer             | null: false                    |
 | city               | string              | null: false                    |
 | street             | string              | null: false                    |
 | building           | string              |                                |
-| phone_number       | integer             | null: false                    |
+| phone_number       | string              | null: false                    |
 | order              | references          | null: false, foreign_key: true |
 
 ### Association
