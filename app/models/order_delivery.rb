@@ -20,6 +20,6 @@ class OrderDelivery
     order = Order.create(user_id: user_id, item_id: item_id)
     # 住所を保存する
     # order_idには、変数orderのidと指定する
-    Delivery.create(post_code: post_code, prefecture: prefecture, city: city, street: street, building: building, phone_number: phone_number, order_id: order.id)
+    Delivery.create(order_id: order.id, post_code: post_code, prefecture: prefecture, city: city, street: street, building: building, phone_number: phone_number)
   end
 end
