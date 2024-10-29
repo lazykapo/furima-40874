@@ -1,25 +1,22 @@
 class OrderDelivery
-
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :street, :building, :phone_number
+  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :street, :building, :phone_number, :token
 
   # ここにバリデーションの処理を書く
   with_options presence: true do
     validates :user_id
     validates :item_id
-    validates :post_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
+    validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'is invalid. Include hyphen(-)' }
+    validates :prefecture_id, numericality: { other_than: 1, message: 'must be other than 1' }
     validates :city
     validates :street
-    validates :phone_number, format: { with: /\A[0-9]{11}\z/, message: 'is invalid' }    
+    validates :phone_number, format: { with: /\Ad{10}$|^\d{11}\z/, message: 'is invalid.' }
+    validates :token
   end
-  validates :prefecture_id, numericality: {other_than: 1, message: 'must be other than 1'}
 
   def save
-  # 各テーブルにデータを保存する処理を書く
-    # 購入情報を保存し、変数orderに代入する
-    order = Order.create(user_id: user_id, item_id: item_id)
-    # 住所を保存する
-    # order_idには、変数orderのidと指定する
-    Delivery.create(order_id: order.id, post_code: post_code, prefecture: prefecture, city: city, street: street, building: building, phone_number: phone_number)
+    order = Order.create(user_id:, item_id:)
+    Delivery.create(order_id: order.id, post_code:, prefecture_id:, city:, street:,
+                    building:, phone_number:)
   end
 end
